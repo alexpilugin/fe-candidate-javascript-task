@@ -1,12 +1,17 @@
 <template>
   <div>
     <h1>Customers</h1>
-
-    <ul>
-      <li v-for="customer in customers">
-        {{ customer.name.first }} {{ customer.name.last }}
-      </li>
-    </ul>
+    <div class="col custom-select" style="width:200px;">
+      <select v-model="selectedPerson">
+          <option 
+            v-for="(customer, i) in customers"
+            :key="i"
+            :value="`${customer.name.first} ${customer.name.last}`" 
+          >
+            {{ customer.name.first }} {{ customer.name.last }}
+          </option>
+      </select>
+    </div>
   </div>
 </template>
 
@@ -17,7 +22,8 @@ export default {
   name: 'CustomerList',
   data() {
     return {
-      customers: []
+      customers: [],
+      selectedPerson: null
     }
   },
   created() {
@@ -33,3 +39,6 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+</style>
