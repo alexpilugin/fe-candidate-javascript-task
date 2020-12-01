@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import CustomerList from '../views/CustomerList.vue'
+import Customer from '../views/Customer.vue'
 import QuoteList from '../views/QuoteList.vue'
 import PolicyList from '../views/PolicyList.vue'
 
@@ -11,6 +12,12 @@ const routes = [
     path: '/customers',
     name: 'Customers',
     component: CustomerList
+  },
+  {
+    path: '/customer/:id',
+    name: 'Customer',
+    component: Customer,
+    props: true
   },
   {
     path: '/quotes',
