@@ -51,7 +51,11 @@ export default {
     if (!this.quotes) {
       axios.get('http://localhost:3000/quotes')
         .then(function(response) {
-          context.quotes = response.data
+          context.quotes = response.data.sort( (a,b) => {
+              if (a.status < b.status) return -1;
+              if (b.status > a.status) return 1;
+              if (b.status == a.status) return 0;
+          })
         })
         .catch(function(e) {
           console.log(e)
@@ -60,7 +64,11 @@ export default {
     if (!this.policies) {
       axios.get('http://localhost:3000/policies')
         .then(function(response) {
-          context.policies = response.data
+          context.policies = response.data.sort( (a,b) => {
+              if (a.status < b.status) return -1;
+              if (b.status > a.status) return 1;
+              if (b.status == a.status) return 0; 
+          })
         })
         .catch(function(e) {
           console.log(e)

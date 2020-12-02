@@ -3,7 +3,10 @@ import VueRouter from 'vue-router'
 import CustomerList from '../views/CustomerList.vue'
 import Customer from '../views/Customer.vue'
 import QuoteList from '../views/QuoteList.vue'
+import Quote from '../views/Quote.vue'
 import PolicyList from '../views/PolicyList.vue'
+import Policy from '../views/Policy.vue'
+
 
 Vue.use(VueRouter)
 
@@ -27,9 +30,21 @@ const routes = [
     props: true
   },
   {
+    path: '/quote/:id',
+    name: 'Quotes',
+    component: Quote,
+    props: true
+  },
+  {
     path: '/policies',
     name: 'Policies',
     component: PolicyList,
+    props: true
+  },
+  {
+    path: '/policy/:id',
+    name: 'Policy',
+    component: Policy,
     props: true
   },
   {
