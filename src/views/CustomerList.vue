@@ -8,43 +8,56 @@
         @click="navigate(customer)"
         :class="customer.isActive?'active':'passive'"
       >
-        {{ customer.name.first }} {{ customer.name.last }}
+        <b>{{ customer.name.first }} {{ customer.name.last }} </b><br>
+        <span v-if="getPolicyStatuses(customer)" style="padding-left: 30px;">
+          Policy: {{ getPolicyStatuses(customer).status }},
+          Product: {{ getPolicyStatuses(customer).product.type }}
+        </span>
+        <!-- <span v-if="getQuotesStatuses(customer)"> Quotes: {{ getQuotesStatuses(customer) }}</span>  --> 
+              
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
 
 export default {
   name: 'CustomerList',
+  props: [
+    /* from a Router */
+    "customers",
+    "quotes",
+    "policies"
+  ],
   data() {
     return {
-      customers: [],
       selectedPerson: null
     }
   },
-  created() {
-    const context = this
 
-    axios.get('http://localhost:3000/customers')
-      .then(function(response) {
-        context.customers = response.data.sort( (a,b) => {
-            if(a.isActive > b.isActive) return -1;
-            if(b.isActive < a.isActive) return 1;
-            if(b.isActive == a.isActive) return 0;
-        })
-        context.$emit("dataReceived", response.data)
-      })
-      .catch(function(e) {
-        console.log(e)
-      })
-  },
   methods: {
     navigate(customerInfo) {
       const route = `/customer/${customerInfo.id}`
       this.$router.push({ path: route })
+    },
+    getQuotesStatuses(customerInfo) {
+      let customerQuotes = null;
+      let quotesStatuses = null;
+      if (this.quotes && this.quotes.length > 0) {
+        customerQuotes = this.quotes.filter(c => c.customerId == customerInfo.id);
+        quotesStatuses = customerQuotes.map(q => q.status);
+        quotesStatuses = quotesStatuses.length && quotesStatuses.length > 0 ? quotesStatuses.join() : null;
+      }
+      return quotesStatuses;
+    },
+    getPolicyStatuses(customerInfo) {
+      let customerPolicy = null;
+      let policyStatuses = null;
+      if (this.policies && this.policies.length > 0) {
+        customerPolicy = this.policies.filter(p => p.customerId == customerInfo.id)[0];
+      }
+      return customerPolicy;
     }
   }
 }

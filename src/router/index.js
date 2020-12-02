@@ -11,7 +11,8 @@ const routes = [
   {
     path: '/customers',
     name: 'Customers',
-    component: CustomerList
+    component: CustomerList,
+    props: true
   },
   {
     path: '/customer/:id',
@@ -22,12 +23,14 @@ const routes = [
   {
     path: '/quotes',
     name: 'Quotes',
-    component: QuoteList
+    component: QuoteList,
+    props: true
   },
   {
     path: '/policies',
     name: 'Policies',
-    component: PolicyList
+    component: PolicyList,
+    props: true
   },
   {
     path: '/',

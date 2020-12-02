@@ -3,7 +3,7 @@
     <h1>Quotes</h1>
 
     <ul>
-      <li v-for="quote in quotes">
+      <li v-for="(quote, i) in quotes" :key="i">
         {{ quote.id }}
       </li>
     </ul>
@@ -11,25 +11,15 @@
 </template>
 
 <script>
-import axios from 'axios'
 
 export default {
   name: 'QuoteList',
-  data() {
-    return {
-      quotes: []
+  props: {
+    /* from a Router */
+    quotes: {
+      type: Array,
+      default: null
     }
   },
-  created() {
-    const context = this
-
-    axios.get('http://localhost:3000/quotes')
-      .then(function(response) {
-        context.quotes = response.data
-      })
-      .catch(function(e) {
-        console.log(e)
-      })
-  }
 }
 </script>
